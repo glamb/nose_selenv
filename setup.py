@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
 		name='nose_selenv',
-		version='0.1',
+		version='0.1.0',
 		author='Gregg Lamb',
 		author_email='glamb@wetpaint-inc.com',
 		description='Nose plugin for wetpaint web qa',
