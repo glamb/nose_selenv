@@ -4,14 +4,20 @@ from ConfigParser import ConfigParser
 
 def set_options_from_config(config):
     if config.has_option('SELENIUM', 'ENVIRONMENT'):
-	    os.environ['SELENV_ENVIRON'] = config.get('SELENIUM','ENVIRONMENT')
+        os.environ['SELENV_ENVIRON'] = config.get('SELENIUM','ENVIRONMENT')
     else:
-	    os.environ['SELENV_ENVIRON'] = 'develop'
+        os.environ['SELENV_ENVIRON'] = 'develop'
+
+    if config.has_option('SELENIUM', 'BASEURL'):
+        os.environ['SELENV_BASEURL'] = config.get('SELENIUM', 'BASEURL')
+
+    if config.has_option('SELENIUM', 'TIMEOUT'):
+        os.environ['SELENV_TIMEOUT'] = config.get('SELENIUM', 'TIMEOUT')
 
     if config.has_option('SELENIUM', 'BROWSER'):
-	    os.environ['SELENV_BROWSER'] = config.get('SELENIUM', 'BROWSER')
+        os.environ['SELENV_BROWSER'] = config.get('SELENIUM', 'BROWSER')
     else:
-	    os.environ['SELENV_BROWSER'] = 'PHANTOMJS'
+        os.environ['SELENV_BROWSER'] = 'PHANTOMJS'
 
 class SelEnv(Plugin):
 
@@ -39,13 +45,25 @@ class SelEnv(Plugin):
                           help='Run the browser in this location (default %default, options ' +
                                self._stringify_options(valid_location_options) +
                                ').' 
-        )
+                           )
         parser.add_option('--browser',
                           action='store',
                           default=env.get('SELENV_BROWSER', 'PHANTOMJS'),
                           dest='browser',
-                          help="Select the type of browser you want Selenium to use. (default %default). "
-        )
+                          help='Select the type of browser you want Selenium to use. (default %default).'
+                          )
+        parser.add_option('--baseurl',
+                         action='store',
+                         dest='base_url',
+                         help='base url of the application in test.'
+                         )
+        parser.add_option('--timeout',
+                         action='store',
+                         dest='timeout',
+                         default='60',
+                         type='str',
+                         help='Change the timeout on the fly.'
+                         )
 
     def read_config_file(self, config_file):
         CONFIG = ConfigParser()
@@ -53,8 +71,10 @@ class SelEnv(Plugin):
         set_options_from_config(CONFIG)
 
     def set_options(self, options):
-	os.environ['SELENV_ENVIRON'] = options.environment
-	os.environ['SELENV_BROWSER'] = options.browser
+        os.environ['SELENV_ENVIRON'] = options.environment
+        os.environ['SELENV_BROWSER'] = options.browser
+        os.environ['SELENV_BASEURL'] = options.base_url
+        os.environ['SELENV_TIMEOUT'] = options.timeout
 
     def configure(self, options, conf):
         Plugin.configure(self, options, conf)
