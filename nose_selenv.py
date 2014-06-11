@@ -19,6 +19,11 @@ def set_options_from_config(config):
     else:
         os.environ['SELENV_BROWSER'] = 'PHANTOMJS'
 
+    if config.has_option('SELENIUM', 'FBUSER'):
+        os.environ['SELENV_FBUSER'] = config.get('SELENIUM', 'FBUSER')
+    if config.has_option('SELENIUM', 'FBPASS'):
+        os.environ['SELENV_FBPASS'] = config.get('SELENIUM', 'FBUSER')
+
 class SelEnv(Plugin):
 
     name = 'selenv'
@@ -38,32 +43,41 @@ class SelEnv(Plugin):
         )
         valid_location_options = ['develop', 'staging', 'dogfood', 'production']
         parser.add_option('--env',
-                          action='store',
-                          choices=valid_location_options,
-                          default=env.get('SELENV_ENVIRO', 'develop'),
-                          dest='environment',
-                          help='Run the browser in this location (default %default, options ' +
-                               self._stringify_options(valid_location_options) +
-                               ').' 
-                           )
+                action='store',
+                choices=valid_location_options,
+                default=env.get('SELENV_ENVIRO', 'develop'),
+                dest='environment',
+                help='Run the browser in this location (default %default, options ' +
+                self._stringify_options(valid_location_options) + ').' 
+                )
         parser.add_option('--browser',
-                          action='store',
-                          default=env.get('SELENV_BROWSER', 'PHANTOMJS'),
-                          dest='browser',
-                          help='Select the type of browser you want Selenium to use. (default %default).'
-                          )
+                action='store',
+                default=env.get('SELENV_BROWSER', 'PHANTOMJS'),
+                dest='browser',
+                help='Select the type of browser you want Selenium to use. (default %default).'
+                )
         parser.add_option('--baseurl',
-                         action='store',
-                         dest='base_url',
-                         help='base url of the application in test.'
-                         )
+                action='store',
+                dest='base_url',
+                help='base url of the application in test.'
+                )
         parser.add_option('--timeout',
-                         action='store',
-                         dest='timeout',
-                         default='60',
-                         type='str',
-                         help='Change the timeout on the fly.'
-                         )
+                action='store',
+                dest='timeout',
+                default='60',
+                type='str',
+                help='Change the timeout on the fly.'
+                )
+        parser.add_option('--fbuser',
+                action='store',
+                dest='fb_user',
+                help='Facebook username'
+                )
+        parser.add_option('--fbpass',
+                action='store',
+                dest='fb_pass',
+                help='Facebook password'
+                )
 
     def read_config_file(self, config_file):
         CONFIG = ConfigParser()
@@ -75,6 +89,8 @@ class SelEnv(Plugin):
         os.environ['SELENV_BROWSER'] = options.browser
         os.environ['SELENV_BASEURL'] = options.base_url
         os.environ['SELENV_TIMEOUT'] = options.timeout
+        os.environ['SELENV_FBUSER'] = options.fb_user
+        os.environ['SELENV_FBPASS'] = options.fb_pass
 
     def configure(self, options, conf):
         Plugin.configure(self, options, conf)
