@@ -22,7 +22,7 @@ def set_options_from_config(config):
     if config.has_option('SELENIUM', 'FBUSER'):
         os.environ['SELENV_FBUSER'] = config.get('SELENIUM', 'FBUSER')
     if config.has_option('SELENIUM', 'FBPASS'):
-        os.environ['SELENV_FBPASS'] = config.get('SELENIUM', 'FBUSER')
+        os.environ['SELENV_FBPASS'] = config.get('SELENIUM', 'FBPASS')
 
 class SelEnv(Plugin):
 
