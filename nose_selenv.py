@@ -85,6 +85,7 @@ class SelEnv(Plugin):
                 action='store',
                 dest='logging',
                 help='Set logging level (debug, info, warn, error, critical). Disabled by default.'
+                )
 
     def read_config_file(self, config_file):
         CONFIG = ConfigParser()
