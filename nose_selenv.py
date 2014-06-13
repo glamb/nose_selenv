@@ -24,6 +24,9 @@ def set_options_from_config(config):
     if config.has_option('SELENIUM', 'FBPASS'):
         os.environ['SELENV_FBPASS'] = config.get('SELENIUM', 'FBPASS')
 
+    if config.has_option('SELENIUM', 'LOGGING'):
+        os.environ['SELENV_LOGGING'] = config.get('SELENIUM', 'LOGGING')
+
 class SelEnv(Plugin):
 
     name = 'selenv'
@@ -78,6 +81,10 @@ class SelEnv(Plugin):
                 dest='fb_pass',
                 help='Facebook password'
                 )
+        parser.add_option('--logging',
+                action='store',
+                dest='logging',
+                help='Set logging level (debug, info, warn, error, critical). Disabled by default.'
 
     def read_config_file(self, config_file):
         CONFIG = ConfigParser()
@@ -91,6 +98,7 @@ class SelEnv(Plugin):
         os.environ['SELENV_TIMEOUT'] = options.timeout
         os.environ['SELENV_FBUSER'] = options.fb_user
         os.environ['SELENV_FBPASS'] = options.fb_pass
+        os.environ['SELENV_LOGGING'] = options.logging
 
     def configure(self, options, conf):
         Plugin.configure(self, options, conf)
