@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
         name='nose_selenv',
-        version='0.3',
+        version='0.4',
         author='Gregg Lamb',
         author_email='glamb@wetpaint-inc.com',
         url='https://github.com/glamb/nose_selenv',
