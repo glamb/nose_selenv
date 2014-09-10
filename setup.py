@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
         name='nose_selenv',
-        version='0.4',
+        version='1.0',
         author='Gregg Lamb',
         author_email='glamb@wetpaint-inc.com',
         url='https://github.com/glamb/nose_selenv',
@@ -17,7 +17,7 @@ setup(
             'Operating System :: MacOS :: MacOS X',
             'Operating System :: Microsoft :: Windows',
             'Programming Language :: Python',
-            'Programming Language :: Python :: 2.7',
+            'Programming Language :: Python :: 3.4',
             'Topic :: Software Development :: Quality Assurance',
             'Topic :: Software Development :: Testing',
             'Topic :: Utilities'],

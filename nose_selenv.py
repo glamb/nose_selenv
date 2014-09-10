@@ -1,6 +1,9 @@
 import os
 from nose.plugins import Plugin
-from ConfigParser import ConfigParser
+try:
+    from configparser import ConfigParser
+except ImportError:
+    from ConfigParser import ConfigParser
 
 def set_options_from_config(config):
     if config.has_option('SELENIUM', 'ENVIRONMENT'):
